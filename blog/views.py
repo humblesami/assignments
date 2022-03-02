@@ -10,6 +10,7 @@ from django.views.generic import (
     DeleteView
 )
 
+from subjects.models import Subject
 from .models import Post
 import operator
 from django.urls import reverse_lazy
@@ -57,6 +58,19 @@ class UserPostListView(ListView):
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return Post.objects.filter(author=user).order_by('-date_posted')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['username'] = self.kwargs.get('username')
+        context['subjects_list'] = Subject.objects.all()
+        context['select_subject_id'] = self.kwargs.get('subject')
+        return context
+
+
+class UserSubjectPostListView(UserPostListView):
+    def get_queryset(self):
+        res = super().get_queryset().filter(subject_id=self.kwargs.get('subject'))
+        return res
 
 
 class PostDetailView(DetailView):
