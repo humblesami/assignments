@@ -9,10 +9,12 @@ https://docs.djangoproject.com/en/2.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
-
+import json
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from shutil import copyfile
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -132,9 +134,35 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'blog-home'
 LOGIN_URL = 'login'
-# STRIPE_PUBLISHABLE_KEY = 'pk_live_52DuEJPBnWQbX9YrWlY5Ryf700d53XPqCu'
-# STRIPE_SECRET_KEY = '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'
+
+STRIPE_PUBLISHABLE_KEY = ''
+STRIPE_SECRET_KEY = ''
+
+config_path = (str(BASE_DIR)+'/config.json')
+config_path = config_path.replace('\\/', '\\')
+config_path = config_path.replace('//', '/')
+if not os.path.exists(config_path):
+    temp_path = config_path.replace('config.json', 'example.config.json')
+    copyfile(temp_path, config_path)
 
 
-STRIPE_PUBLISHABLE_KEY = 'pk_test_3NQktkqmTXkwzUujswrrpEfq00JYbpGzvK'
-STRIPE_SECRET_KEY = 'sk_test_6tGwaBPztMBfPVhwepn1AlNE00uIOiomNe'
+LOCALHOST = False
+SITE_URL = ''
+STRIPE_PUBLISHABLE_KEY = ''
+STRIPE_SECRET_KEY = ''
+
+with open(config_path, 'r') as site_config:
+    config_info = json.load(site_config)
+    env_type = config_info.get('env')
+    if config_info.get('local'):
+        LOCALHOST = True
+        ALLOWED_HOSTS = ['*']
+    if env_type != 'production':
+        DEBUG = True
+    else:
+        DEBUG = False
+    SITE_URL = config_info.get('site_url')
+    STRIPE_PUBLISHABLE_KEY = config_info.get('stripe_public_key')
+    STRIPE_SECRET_KEY = config_info.get('stripe_secret_key')
+    
+

@@ -1,0 +1,10 @@
+{
+  "config_guide_dev": "Please use env:'dev' and local:'1' at localhost",
+  "env": "production",
+  "local": 0,
+
+  "config_guide_production": "site_url: 'actual_site_url', use your own stripe key keys (not of test mode) for real payments",
+  "site_url": "http://127.0.0.1:8000",
+  "stripe_secret_key": "sk_test_6tGwaBPztMBfPVhwepn1AlNE00uIOiomNe",
+  "stripe_public_key": "pk_test_3NQktkqmTXkwzUujswrrpEfq00JYbpGzvK"
+}

@@ -1,33 +1,24 @@
-console.log("Sanity check!");
-
 fetch("/payments/config/")
 .then((result) => { return result.json(); })
 .then((data) => {
-  // Initialize Stripe.js
-  const stripe = Stripe(data.publicKey);
-  console.log(stripe);
-  document.querySelector("#submitBtn").addEventListener("click", () => {
-    // Get Checkout Session ID
-    fetch("/payments/create-checkout-session/")
-    .then((result) => {
-     console.log(result);
-     result = result.json();
-     console.log(result);
-     return result;
-     })
-    .then((data) => {
-      console.log(data);
-      // Redirect to Stripe Checkout
-      if(data){
-        data = {sessionId: data.sessionId};
-        data = stripe.redirectToCheckout(data);
-        return data;
-      }
-    })
-    .then((res) => {
-      console.log(res);
-    }).catch(function(er){
-        console.log('error ', er);
+    const stripe = Stripe(data.publicKey);
+    document.querySelector("#submitBtn").addEventListener("click", () => {
+        fetch("/payments/create-checkout-session/?amount=50").then((result) => {
+            console.log(result);
+            result = result.json();
+            return result;
+        }).then((data) => {
+            if(data.error){
+                throw data.error;
+            }
+            data = { sessionId: data.sessionId };
+            data = stripe.redirectToCheckout(data);
+            return data;
+
+        }).then((res) => {
+            console.log(res);
+        }).catch(function (er) {
+            console.log('error ', er);
+        });
     });
-  });
 });
