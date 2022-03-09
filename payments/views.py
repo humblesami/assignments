@@ -33,6 +33,10 @@ def stripe_config(request):
 def create_checkout_session(request):
     if request.method == 'GET':
         amount = request.GET.get('amount')
+        dfi = request.GET.get('file_id')
+        if not dfi:
+            res = {'error': 'Invalid file id to download' }
+            return JsonResponse(res)
         if amount:
             amount = int(amount)
         if not amount:
@@ -42,8 +46,8 @@ def create_checkout_session(request):
         stripe.api_key = settings.STRIPE_SECRET_KEY
         try:
             checkout_session = stripe.checkout.Session.create(
-                success_url=domain_url + '/payments?session_id={CHECKOUT_SESSION_ID}',
-                cancel_url=domain_url + '/cancelled/',
+                success_url=domain_url + '?session_id={CHECKOUT_SESSION_ID}&download_file_id='+dfi,
+                cancel_url=domain_url + '/payments/cancelled/',
                 payment_method_types=['card'],
                 mode='payment',
                 line_items=[

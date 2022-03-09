@@ -22,11 +22,13 @@
                 {% if post.file %}
                 <div class="form-group mt-0 pt-0  m-2">
                     {% if post.private %}
-                    <!--                <i class="fas fa-download"></i>-->
-                    <a class="btn btn-outline-success btn-d" href="{{ post.file.url }}" type="submit">Buy Now</a>
+                        {% if download_file_id == post.id %}
+                        <a class="btn btn-outline-primary btn-d" href="{{ post.file.url }}" download type="submit">Download</a>
+                        {% else %}
+                        <a class="btn btn-outline-success btn-d buy_now" data-file-id="{{ post.id }}" data-file-url="{{ post.file.url }}" data-price="{{ post.amount }}" type="submit">Buy Now</a>
+                        {%endif%}
                     {% else %}
-                    <a class="btn btn-outline-primary btn-d" href="{{ post.file.url }}" download
-                       type="submit">Download</a>
+                    <a class="btn btn-outline-primary btn-d" href="{{ post.file.url }}" download type="submit">Download</a>
                     {%endif%}
                 </div>
                 {% endif %}
@@ -35,6 +37,8 @@
     </article>
 </div>
 {% endfor %}
+<script defer src="/static/blog/private_file.js"></script>
+<script defer src="https://js.stripe.com/v3/"></script>
 {% if is_paginated %}
 
 {% if page_obj.has_previous %}

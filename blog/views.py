@@ -17,9 +17,8 @@ from .models import Post
 
 
 def home(request):
-    context = {
-        'posts': Post.objects.all()
-    }
+    dfi = request.GET.get('download_file_id')
+    context = {'posts': Post.objects.all(), 'download_file_id': dfi}
     return render(request, 'blog/home.html', context)
 
 
@@ -45,6 +44,14 @@ class PostListView(ListView):
     ordering = ['-date_posted']
     paginate_by = 2
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        dfi = self.request.GET.get('download_file_id')
+        if dfi:
+            dfi = int(dfi)
+        context['download_file_id'] = dfi
+        return context
+    
 
 class UserPostListView(ListView):
     model = Post
@@ -88,11 +95,12 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     template_name = 'blog/post_form.html'
-    fields = ['title', 'content', 'file']
+    fields = ['title', 'content', 'private', 'amount', 'file']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        return super().form_valid(form)
+        res = super().form_valid(form)
+        return res
 
     def test_func(self):
         post = self.get_object()

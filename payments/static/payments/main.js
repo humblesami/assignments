@@ -1,9 +1,9 @@
-fetch("/payments/config/")
-.then((result) => { return result.json(); })
-.then((data) => {
-    const stripe = Stripe(data.publicKey);
-    document.querySelector("#submitBtn").addEventListener("click", () => {
-        fetch("/payments/create-checkout-session/?amount=50").then((result) => {
+function make_stripe_payment(payment_amount){
+    fetch("/payments/config/")
+    .then((result) => { return result.json(); })
+    .then((data) => {
+        const stripe = Stripe(data.publicKey);
+        fetch("/payments/create-checkout-session/?amount="+payment_amount).then((result) => {
             console.log(result);
             result = result.json();
             return result;
@@ -21,4 +21,6 @@ fetch("/payments/config/")
             console.log('error ', er);
         });
     });
-});
+}
+alert('file opened, now closing');
+window.close();
