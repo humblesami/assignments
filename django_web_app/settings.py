@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'blog.apps.BlogConfig',
-    'payment.apps.PaymentConfig',
     'subjects.apps.SubjectsConfig',
     'users.apps.UsersConfig',
     'crispy_forms',
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'payments.apps.PaymentsConfig'
 ]
 
 MIDDLEWARE = [
@@ -132,3 +132,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'blog-home'
 LOGIN_URL = 'login'
+# STRIPE_PUBLISHABLE_KEY = 'pk_live_52DuEJPBnWQbX9YrWlY5Ryf700d53XPqCu'
+# STRIPE_SECRET_KEY = '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'
+
+
+STRIPE_PUBLISHABLE_KEY = 'pk_test_3NQktkqmTXkwzUujswrrpEfq00JYbpGzvK'
+STRIPE_SECRET_KEY = 'sk_test_6tGwaBPztMBfPVhwepn1AlNE00uIOiomNe'

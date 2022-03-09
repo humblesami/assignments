@@ -5,6 +5,7 @@ from django.views.generic import (
 from .models import Subject
 # Create your views here.
 
+
 class PostListView(ListView):
     model = Subject
     template_name = 'subjects/home.html'  # <app>/<model>_<viewtype>.html
