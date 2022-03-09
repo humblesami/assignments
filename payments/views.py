@@ -34,7 +34,7 @@ def create_checkout_session(request):
     if request.method == 'GET':
         amount = request.GET.get('amount')
         dfi = request.GET.get('file_id')
-        pno = request.GET.get('page') or 1
+        pno = request.GET.get('page') or '1'
         if not dfi:
             res = {'error': 'Invalid file id to download' }
             return JsonResponse(res)
