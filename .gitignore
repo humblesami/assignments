@@ -12,6 +12,7 @@ static/build
 config.json
 /static
 /media
+!static/users/default.jpeg
 ignored
 /django
 logs/*.log
