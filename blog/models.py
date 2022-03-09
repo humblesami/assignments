@@ -9,6 +9,7 @@ class Post(models.Model):
 	title = models.CharField(max_length=100)
 	file = models.FileField(null=True,blank=True,upload_to='Files')
 	content = models.TextField()
+	public = models.BooleanField()
 	date_posted = models.DateTimeField(default=timezone.now)
 	subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE, default=1)
 	author = models.ForeignKey(User, on_delete=models.CASCADE)

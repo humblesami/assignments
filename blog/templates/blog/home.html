@@ -20,10 +20,17 @@
           <div class="d-flex justify-content-between">
             <p class="article-content text-justify text-truncate overflow-hidden">{{ post.content }}</p>
             {% if post.file %}
-          <div class="form-group mt-0 pt-0  m-2">          
-            <a class="btn btn-outline-primary  btn-d "  href="{{ post.file.url }}"  download type="submit"><i class="fas fa-download"></i></a>
-          </div>
-          {% endif %}
+            {% if post.public == 1 %}
+              <div class="form-group mt-0 pt-0  m-2">          
+                <a class="btn btn-outline-primary  btn-d "  href="{{ post.file.url }}"  download type="submit"><i class="fas fa-download"></i></a>
+              </div>
+            {%endif%}
+            {% if post.public == 0 %}
+              <div class="form-group mt-0 pt-0  m-2">          
+                <a class="btn btn-outline-success  btn-d "  href="{{ post.file.url }}"  type="submit">Buy Now</i></a>
+              </div>
+            {%endif%}
+            {% endif %}
         
           </div>
       
