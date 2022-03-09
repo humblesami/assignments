@@ -26,7 +26,7 @@
                         <a class="btn btn-outline-primary btn-d" href="{{ post.file.url }}" download type="submit">Download</a>
                         {% else %}
                             {% if request.user.id %}
-                            <a class="btn btn-outline-success btn-d buy_now" data-file-id="{{ post.id }}" data-file-url="{{ post.file.url }}" data-price="{{ post.amount }}" type="submit">Buy Now</a>
+                            <a class="btn btn-outline-success btn-d buy_now" data-page="{{ request.GET.page }}" data-file-id="{{ post.id }}" data-file-url="{{ post.file.url }}" data-price="{{ post.amount }}" type="submit">Buy Now</a>
                             {% else %}
                             <a class="btn btn-outline-primary btn-d" href="{% url 'login' %}" type="submit">Please Login</a>
                             {%endif%}
