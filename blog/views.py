@@ -1,7 +1,9 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Q
 from django.contrib.auth.models import User
+from django.contrib.staticfiles.views import serve
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
 from django.views.generic import (
     ListView,
     DetailView,
@@ -12,11 +14,6 @@ from django.views.generic import (
 
 from subjects.models import Subject
 from .models import Post
-import operator
-from django.urls import reverse_lazy
-from django.contrib.staticfiles.views import serve
-
-from django.db.models import Q
 
 
 def home(request):
@@ -24,6 +21,7 @@ def home(request):
         'posts': Post.objects.all()
     }
     return render(request, 'blog/home.html', context)
+
 
 def search(request):
     template='blog/home.html'
@@ -36,9 +34,8 @@ def search(request):
     return render(request,template,context)
    
 
-
 def getfile(request):
-   return serve(request, 'File')
+    return serve(request, 'File')
 
 
 class PostListView(ListView):
@@ -81,7 +78,7 @@ class PostDetailView(DetailView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = 'blog/post_form.html'
-    fields = ['title', 'content', 'subject_id', 'file']
+    fields = ['title', 'content', 'private', 'amount', 'subject_id', 'file']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
