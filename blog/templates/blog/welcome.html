@@ -1,0 +1,62 @@
+{% extends "blog/base.html" %}
+{% block content %}
+{% load static %}
+<!-- background.jpeg -->
+<style>
+    #bg-imagee {
+        background: url("/static/img/background.jpeg") no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        /* padding: 100px 0 0 0; */
+    }
+    .circle {
+            width: 300px;
+            height: 300px;
+            line-height: 300px;
+            border-radius: 50%;
+            font-size: 20px;
+            color: #fff;
+            text-align: center;
+            background: rgb(111, 196, 108)
+          }
+</style>
+<div id="bg-imagee">
+    <div class="row">
+        <div class="col-12 pr-4">
+            <p class="text-white font-weight-bold" style="font: italic 4.2em 'Fira Sans', serif;  padding-left: 30px; padding-top: 10px;">
+                Welcome to Share & Learn Website
+            </p>
+        </div>
+    </div>
+    <hr style="border-top: 5px solid rgb(111, 196, 108)">
+    <div class="row">
+        <div class="col-12 pr-4">
+            <p class="text-white font-weight-bold" style="font: italic 2.2em 'Fira Sans', serif; padding-left: 30px;">TAKE THE FIRST STEP TO KNOWLEDGE WITH US.</p>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 8%;">
+        <div class="row">
+            <div class="col-4">
+                <div class="circle">Learn About New Topics</div>
+            </div>
+            <div class="col-4">
+                <div class="circle">Earn By Sharing Your Knowledge</div>
+            </div>
+
+            <div class="col-4">
+                <div class="circle">Get Sample Coursework</div>
+            </div>
+        </div>
+    </div>    
+    <!-- <div class="row">
+        <div class="col-12 text-center">
+            <img src="{% static 'img/website2.png' %}" alt="Sherlan" height="200px" style="margin-top: 20%;">
+        </div>
+    </div> -->
+
+</div>
+
+</div>
+{% endblock content %}

@@ -1,67 +1,79 @@
 {% extends "blog/base.html" %}
 {% block content %}
-{% for post in posts %}
-<div class="jumbotron mt-3 bg-white shadow-lg" id="post_{{post.id}}">
-    <article class="media content-section shadow">
-        <a href="{{ post.author.profile.image.url }} " target="_blank"> <img src="{{ post.author.profile.image.url }}"
-          alt="" class="article-img rounded-circle img-thumbnail img-fluid shadow">
-        </a>
-        <div class="media-body">
-            <div class="article-metadata d-flex justify-content-between">
-                <a class="mr-2 " href="{% url 'user-posts' post.author.username %}">
-                    <h3>{{ post.author }} ({{post.subject_id.title }})</h3>
-                </a>
-                <small class="text-muted">{{ post.date_upload|date:"F d, Y" }}</small>
-            </div>
-            {% if post.file %}
-            <a href="{{ post.file.url }}" download class="text-dark text-justify "><h5>{{ post.blog }}</h5></a>
-            {% endif %}
-            <h2><a class="article-title text-justify " href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-            <div class="d-flex justify-content-between">
-                <p class="article-content text-justify text-truncate overflow-hidden">{{ post.content }}</p>
-                {% if post.file %}
-                <div class="form-group mt-0 pt-0  m-2">
-                    {% if post.private %}
-                        {% if download_file_id == post.id %}
-                        <a class="btn btn-outline-primary btn-d" href="{{ post.file.url }}" download type="submit">Download</a>
-                        {% else %}
-                            {% if request.user.id %}
-                            <a class="btn btn-outline-success btn-d buy_now" data-page="{{ request.GET.page }}" data-file-id="{{ post.id }}" data-file-url="{{ post.file.url }}" data-price="{{ post.amount }}" type="submit">Buy Now</a>
-                            {% else %}
-                            <a class="btn btn-outline-primary btn-d" href="{% url 'login' %}" type="submit">Please Login</a>
-                            {%endif%}
-                        {%endif%}
-                    {% else %}
-                    <a class="btn btn-outline-primary btn-d" href="{{ post.file.url }}" download type="submit">Download</a>
-                    {%endif%}
+<div class="container">
+
+
+    {% for post in posts %}
+    <div class="jumbotron mt-3 bg-white shadow-lg" id="post_{{post.id}}">
+        <article class="media content-section shadow">
+            <a href="{{ post.author.profile.image.url }} " target="_blank"> <img
+                    src="{{ post.author.profile.image.url }}" alt=""
+                    class="article-img rounded-circle img-thumbnail img-fluid shadow">
+            </a>
+            <div class="media-body">
+                <div class="article-metadata d-flex justify-content-between">
+                    <a class="mr-2 " href="{% url 'user-posts' post.author.username %}">
+                        <h3>{{ post.author }} ({{post.subject_id.title }})</h3>
+                    </a>
+                    <small class="text-muted">{{ post.date_upload|date:"F d, Y" }}</small>
                 </div>
+                {% if post.file %}
+                <a href="{{ post.file.url }}" download class="text-dark text-justify ">
+                    <h5>{{ post.blog }}</h5>
+                </a>
                 {% endif %}
+                <h2><a class="article-title text-justify " href="{% url 'post-detail' post.id %}">{{ post.title }}</a>
+                </h2>
+                <div class="d-flex justify-content-between">
+                    <p class="article-content text-justify text-truncate overflow-hidden">{{ post.content }}</p>
+                    {% if post.file %}
+                    <div class="form-group mt-0 pt-0  m-2">
+                        {% if post.private %}
+                        {% if download_file_id == post.id %}
+                        <a class="btn btn-outline-primary btn-d" href="{{ post.file.url }}" download
+                            type="submit">Download</a>
+                        {% else %}
+                        {% if request.user.id %}
+                        <a class="btn btn-outline-success btn-d buy_now" data-page="{{ request.GET.page }}"
+                            data-file-id="{{ post.id }}" data-file-url="{{ post.file.url }}"
+                            data-price="{{ post.amount }}" type="submit">Buy Now</a>
+                        {% else %}
+                        <a class="btn btn-outline-primary btn-d" href="{% url 'login' %}" type="submit">Please Login</a>
+                        {%endif%}
+                        {%endif%}
+                        {% else %}
+                        <a class="btn btn-outline-primary btn-d" href="{{ post.file.url }}" download
+                            type="submit">Download</a>
+                        {%endif%}
+                    </div>
+                    {% endif %}
+                </div>
             </div>
-        </div>
-    </article>
+        </article>
+    </div>
+    {% endfor %}
+    <script defer src="/static/blog/private_file.js"></script>
+    <script defer src="https://js.stripe.com/v3/"></script>
+    {% if is_paginated %}
+
+    {% if page_obj.has_previous %}
+    <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+    <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <a class="btn btn-outline-info mb-4"
+        href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+
+        {% endif %}
 </div>
-{% endfor %}
-<script defer src="/static/blog/private_file.js"></script>
-<script defer src="https://js.stripe.com/v3/"></script>
-{% if is_paginated %}
-
-{% if page_obj.has_previous %}
-<a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-<a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-{% endif %}
-
-{% for num in page_obj.paginator.page_range %}
-{% if page_obj.number == num %}
-<a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
-{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-<a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
-{% endif %}
-{% endfor %}
-
-{% if page_obj.has_next %}
-<a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-<a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-{% endif %}
-
-{% endif %}
 {% endblock content %}

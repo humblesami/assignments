@@ -15,6 +15,9 @@ from django.views.generic import (
 from subjects.models import Subject
 from .models import Post
 
+def welcome(request):
+    return render(request, 'blog/welcome.html', {'title': 'Welcome'})
+
 
 def home(request):
     dfi = request.GET.get('download_file_id')
@@ -85,7 +88,7 @@ class PostDetailView(DetailView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = 'blog/post_form.html'
-    fields = ['title', 'content', 'private', 'amount', 'subject_id', 'file']
+    fields = ['title', 'subject_id', 'content', 'private', 'amount', 'file']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -123,3 +126,6 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})
+
+def contact(request):
+    return render(request, 'blog/contact-us.html', {'title': 'Contact Us'})

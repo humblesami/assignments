@@ -1,5 +1,7 @@
 {% extends "blog/base.html" %}
 {% block content %}
+<div class="container">
+
     <h1 class="mb-3">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
     <input type="hidden" id="selected_user" value="{{username}}">
 <div class="row form-group">
@@ -50,4 +52,7 @@
       {% endif %}
 
     {% endif %}
-{% endblock content %}
+
+
+  </div>
+      {% endblock content %}
