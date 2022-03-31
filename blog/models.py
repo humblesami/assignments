@@ -13,7 +13,7 @@ class Post(models.Model):
 	private = models.BooleanField()
 	date_posted = models.DateTimeField(default=timezone.now)
 	amount = models.IntegerField(default=0)
-	subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE, default=1)
+	subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE, default=1, verbose_name="Subject")
 	author = models.ForeignKey(User, on_delete=models.CASCADE)
 
 	def __str__(self):
