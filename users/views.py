@@ -2,6 +2,15 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from django.views.generic import ListView
+from .models import Profile
+
+
+class UserProfileListView(ListView):
+    model = Profile
+    # template_name = 'blog/user_posts.html'
+    # default is profile_list.html
+    paginate_by = 2
 
 
 def register(request):
