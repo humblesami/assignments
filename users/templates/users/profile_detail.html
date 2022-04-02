@@ -1,0 +1,30 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="jumbotron shadow-lg container">
+    <div class="container">
+        <div class="py-2" style="font-size:16px">
+            <a href="/users"><- Back</a>
+        </div>
+    </div>
+    <h4 class="pl-1">{{profile.full_name}}</h4>
+    <article class="media content-section shadow ">
+        <style>
+            .media-body label{
+                width: 150px;
+                padding-right: 10px;
+            }
+        </style>
+        <img class="rounded-circle article-img" src="{{ profile.image.url|default:'/static/users/default.jpeg' }}">
+        <div class="">
+            <div class="media-body">
+                <p class="article-content"><label>Education:</label>{{ profile.education }}</p>
+                <p class="article-content"><label>Major Subject:</label>{{ profile.major_subject }}</p>
+                <p class="article-content"><label>Country:</label>{{ profile.country.name|default:'None' }}</p>
+                <p class="article-content"><label>Projects:</label><a href="/user/{{profile.user.username}}">Explore</a>
+                </p>
+                <p class="article-content"><label>Detail:</label>{{ profile.detail }}</p>
+            </div>
+        </div>
+    </article>
+</div>
+{% endblock content %}

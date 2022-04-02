@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from .models import Profile
 
 
@@ -11,6 +11,10 @@ class UserProfileListView(ListView):
     # template_name = 'blog/user_posts.html'
     # default is profile_list.html
     paginate_by = 2
+
+
+class UserProfileDetailView(DetailView):
+    model = Profile
 
 
 def register(request):

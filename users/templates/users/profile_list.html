@@ -13,6 +13,7 @@
     <div class="media content-section">
         <img class="rounded-circle article-img" src="{{ profile.image.url|default:'/static/users/default.jpeg' }}">
         <div class="media-body">
+            <p><label>Name</label><a href="/users/{{profile.id}}">{{profile.full_name}}</a></p>
             <p class="article-content"><label>Education:</label>{{ profile.education }}</p>
             <p class="article-content"><label>Major Subject:</label>{{ profile.major_subject }}</p>
             <p class="article-content"><label>Country:</label>{{ profile.country.name|default:'None' }}</p>
