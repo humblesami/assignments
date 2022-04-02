@@ -82,3 +82,12 @@ a.article-title:hover {
 .account-heading {
   font-size: 2.5rem;
 }
+
+.py-5{
+    padding: 5px 0;
+}
+.b1-l-r{
+    border: 1px solid #eee;
+    border-radius: 2px;
+    padding: 2px;
+}

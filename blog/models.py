@@ -8,7 +8,8 @@ from subjects.models import Subject
 
 class Post(models.Model):
 	title = models.CharField(max_length=100)
-	file = models.FileField(null=True,blank=True,upload_to='Files')
+	picture = models.ImageField(null=True, blank=True, upload_to='FileImages')
+	file = models.FileField(null=True, blank=True, upload_to='Files')
 	content = models.TextField()
 	private = models.BooleanField()
 	date_posted = models.DateTimeField(default=timezone.now)

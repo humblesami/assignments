@@ -29,6 +29,14 @@
             </div>
             <div>
                 {% if object.file %}
+                {% if object.picture %}
+                <div class="py-5">
+                    <label>Picture</label>
+                    <div class="">
+                        <img class="b1-l-r" src="{{ object.picture.url }}" />
+                    </div>
+                </div>
+                {% endif %}
                 {% if object.extension == '.jpg' or object.extension == 'jpeg' or object.extension == 'png' %}
                 <a href="{{ object.file.url }}" download><img src="{{ object.file.url }}" alt="" class="img-fluid "></a>
                 <a href="{{ object.file.url }}" download class="text-dark"><h5>{{ object.file }}</h5></a>
