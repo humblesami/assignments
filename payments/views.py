@@ -50,7 +50,7 @@ def create_checkout_session(request):
         stripe.api_key = settings.STRIPE_SECRET_KEY
         try:
             checkout_session = stripe.checkout.Session.create(
-                success_url=domain_url + '?session_id={CHECKOUT_SESSION_ID}&download_file_id='+dfi+'&page='+pno+'#post_'+dfi,
+                success_url=domain_url + '/projects?session_id={CHECKOUT_SESSION_ID}&download_file_id='+dfi+'&page='+pno+'#post_'+dfi,
                 cancel_url=domain_url + '/payments/cancelled/',
                 payment_method_types=['card'],
                 mode='payment',

@@ -10,7 +10,7 @@ class UserProfileListView(ListView):
     model = Profile
     # template_name = 'blog/user_posts.html'
     # default is profile_list.html
-    paginate_by = 2
+    paginate_by = 10
 
 
 class UserProfileDetailView(DetailView):

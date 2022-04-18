@@ -43,13 +43,15 @@
             return result;
         }).then((data) => {
             if(data.error){
+                console.log('error');
                 throw data.error;
             }
+            console.log(data, 'data');
             data = { sessionId: data.sessionId };
             data = stripe.redirectToCheckout(data);
             return data;
         }).then((res) => {
-            console.log(res);
+            console.log(res, 'res');
         }).catch(function (er) {
             console.log('error ', er);
         });
